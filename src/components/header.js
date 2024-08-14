@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { CartIcon } from "./Shop/CartIcon";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,64 +14,57 @@ export const Header = () => {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            {/* <img
-              className="h-8 w-auto"
-              src=""
-              alt=""
-            /> */}
             <h1 className="text-2xl font-semibold leading-6 text-gray-900">
               Capture Rings
             </h1>
           </a>
         </div>
 
-        {/* Hamburger Menu */}
-        <div className="flex lg:hidden">
-          {isOpen ? (
-            <button
-              type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setIsOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
+        {/* Mobile View: CartIcon and Hamburger Menu */}
+        <div className="flex items-center lg:hidden">
+          <div className="mr-2">
+            <CartIcon />
+          </div>
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className="sr-only">
+              {isOpen ? "Close menu" : "Open menu"}
+            </span>
+            {isOpen ? (
               <svg
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setIsOpen(true)}
-            >
-              <span className="sr-only">Open menu</span>
+            ) : (
               <svg
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M4 6h16M4 12h16m-7 6h7"
                 />
               </svg>
-            </button>
-          )}
+            )}
+          </button>
         </div>
 
         {/* Desktop Menu */}
@@ -133,12 +126,7 @@ export const Header = () => {
             </Link>
           </li>
           <li>
-            <Link
-              to="#"
-              className="text-lg font-semibold leading-6 text-gray-900 hover:text-primaryBtn"
-            >
-              Cart
-            </Link>
+            <CartIcon />
           </li>
         </ul>
       </nav>
@@ -147,64 +135,56 @@ export const Header = () => {
       {isOpen && (
         <div className="lg:hidden" role="dialog" aria-modal="true">
           <div className="relative z-50 w-full overflow-y-auto sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            {isOpen && (
-              <div className="bg-gray-300 rounded-b-xl">
-                <div className="flow-root px-6 py-6">
-                  <div className="-my-6 divide-y divide-gray-500/10">
-                    <div className="space-y-2 py-6">
-                      <a
-                        href="/"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Home
-                      </a>
-                      <a
-                        href="/booking"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Bookings
-                      </a>
-                      <a
-                        href="/contact"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Contact
-                      </a>
-                      <a
-                        href="/about"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        About Us
-                      </a>
-                      <a
-                        href="/blog"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Blog
-                      </a>
-                      <a
-                        href="/gallery"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Gallery
-                      </a>
-                      <a
-                        href="/shop"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Shop
-                      </a>
-                      <a
-                        href="#"
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
-                      >
-                        Cart
-                      </a>
-                    </div>
+            <div className="bg-gray-300 rounded-b-xl">
+              <div className="flow-root px-6 py-6">
+                <div className="-my-6 divide-y divide-gray-500/10">
+                  <div className="space-y-2 py-6">
+                    <Link
+                      to="/"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to="/booking"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Bookings
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Contact
+                    </Link>
+                    <Link
+                      to="/about"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      About Us
+                    </Link>
+                    <Link
+                      to="/blog"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Blog
+                    </Link>
+                    <Link
+                      to="/gallery"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Gallery
+                    </Link>
+                    <Link
+                      to="/shop"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-primaryBtn"
+                    >
+                      Shop
+                    </Link>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}

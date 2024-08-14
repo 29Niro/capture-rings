@@ -1,5 +1,9 @@
 const generateBookingId = () => {
-  return 'BOOK-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+  return "BOOK-" + Math.random().toString(36).substr(2, 9).toUpperCase();
 };
 
-export { generateBookingId };
+const generateOrderId = () => {
+  return "ORDER-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+};
+
+export { generateBookingId, generateOrderId };

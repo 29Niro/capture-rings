@@ -1,32 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { Header } from './header';
+import { Footer } from './footer';
+import { db } from '../firebase/firebase-config';
 
 export const EventGallery = () => {
   const { id } = useParams();
+  const [images, setImages] = useState([]);
+  const [eventTitle, setEventTitle] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // Fetch or use static data for the specific event's gallery
-  // For demonstration, using static data
-  const event = {
-    title: `Event ${id}`,
-    images: [
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-    ],
-  };
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        // Fetch event title from Firestore
+        const eventDoc = await getDoc(doc(db, 'events', id));
+        console.log(eventDoc.data());
+        if (eventDoc.exists()) {
+          setEventTitle(eventDoc.data().eventName);
+        }
+
+        // // Fetch event images from Firebase Storage
+        // const storageRef = ref(storage, `events/${id}`);
+        // const imageRefs = await listAll(storageRef);
+
+        // const urls = await Promise.all(
+        //   imageRefs.items.map((imageRef) => getDownloadURL(imageRef))
+        // );
+
+        setImages(eventDoc.data().imageUrls);
+      } catch (error) {
+        console.error('Error fetching event data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEventData();
+  }, [id]);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{event.title}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {event.images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Gallery ${index}`}
-            className="w-full h-40 object-cover rounded-lg shadow-lg"
-          />
-        ))}
+    <section>
+      <Header />
+      <div className="container mx-auto px-6 md:px-36 py-12">
+        <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 font-domine">
+          {eventTitle || 'Event Gallery'}
+        </h1>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-20">
+            <p>Loading...</p>
+          </div>
+        )}
+
+        {/* No Data State */}
+        {!loading && images.length === 0 && (
+          <div className="text-center py-20">
+            <h2>No blogs available</h2>
+          </div>
+        )}
+
+        {/* Image Gallery */}
+        {!loading && images.length > 0 && (
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-6">
+            {images.map((url, index) => (
+              <div
+                key={index}
+                className="border rounded-lg overflow-hidden shadow-lg"
+              >
+                <img
+                  src={url}
+                  alt={`${index + 1}`}
+                  className="w-full h-80 object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+      <Footer />
+    </section>
   );
 };

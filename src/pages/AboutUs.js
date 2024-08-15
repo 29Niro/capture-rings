@@ -46,7 +46,7 @@ export const AboutUs = () => {
   return (
     <>
       <Header />
-      <section className="mt-20 px-6 md:px-36">
+      <section className="px-6 md:px-36">
         {/* about us */}
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="text-center md:text-left md:w-1/2">

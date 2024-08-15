@@ -22,7 +22,6 @@ export const MapComponent = () => {
       center={center}
       zoom={17}
       style={{ height: '400px', width: '100%' }}
-      className='mt-16'
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

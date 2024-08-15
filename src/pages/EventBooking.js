@@ -10,6 +10,7 @@ import { Footer } from '../components/footer';
 export const EventBooking = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
+    id: '',
     title: '',
     price: '',
     date: '',
@@ -37,7 +38,7 @@ export const EventBooking = () => {
   return (
     <section>
       <Header />
-      <div className="container mx-auto mt-20 px-6 md:px-36 py-12">
+      <div className="container mx-auto px-6 md:px-36 py-12">
         {/* Mobile View - Show only active step title */}
         <div className="md:hidden text-center text-lg font-semibold mb-6 py-2 px-4 mx-2 rounded-lg bg-primaryBtn text-white">
           {steps[currentStep].label}

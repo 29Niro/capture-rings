@@ -1,33 +1,59 @@
-import { doc, setDoc } from 'firebase/firestore';
 import React from 'react';
+import emailjs from 'emailjs-com';
 import { db } from '../../firebase/firebase-config';
+import { doc, setDoc } from 'firebase/firestore';
+import { generateBookingId } from '../../utils/utils';
 
-export const Summary = ({ formData, nextStep, prevStep }) => {
+export const Summary = ({ formData, setFormData, nextStep, prevStep }) => {
+
   const handleConfirm = async (e) => {
     e.preventDefault();
     try {
-      const docRef = doc(
-        db,
-        'appointments',
-        `${formData.email}-${formData.date}-${new Date().getDate()}`
-      );
+      const bookingId = generateBookingId();
+      const docRef = doc(db, 'appointments', bookingId);
 
+      // Update the form data with the booking ID
+      setFormData({ ...formData, id: bookingId });
+
+      // Save appointment to Firestore
       await setDoc(docRef, {
         ...formData,
+        id: bookingId,
         createdAt: new Date(),
         status: 'pending',
       });
-      console.log('Document successfully written!');
+
+      // Email template parameters
+      const templateParams = {
+        to_name: `${formData.fname} ${formData.lname}`,
+        to_email: formData.email,
+        to_shop: 'niroorin2@gmail.com',
+        from_name: 'Capture Rings Studio', // or any name you prefer
+        service: formData.title,
+        date: formData.date,
+        time: formData.time,
+        price: formData.price,
+        message: `Your booking with ID ${bookingId} has been confirmed.`,
+      };
+
+      // Send email to the user
+      await emailjs.send(
+        'service_vk35obn',
+        'template_3ccaq4p',
+        templateParams,
+        'heknMVjMXv40gqWVt'
+      );
+
+      //add another template for the shop owner
 
       nextStep();
     } catch (err) {
-      console.error(err);
+      console.error('Error:', err);
     }
   };
 
   return (
     <div className="m-6 text-center">
-      {/* Add a image */}
       <h2 className="text-2xl font-bold mb-2">Summary</h2>
       <p className="text-lg mb-4 text-gray-500">
         Your appointment booking summary
@@ -51,7 +77,7 @@ export const Summary = ({ formData, nextStep, prevStep }) => {
         <div>
           <p className="mb-2">Date & Time</p>
           <p className="mb-2">
-            <strong>{formData.date}</strong>,<strong>{formData.time}</strong>
+            <strong>{formData.date}</strong>, <strong>{formData.time}</strong>
           </p>
         </div>
       </div>

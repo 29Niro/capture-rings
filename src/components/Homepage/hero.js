@@ -8,7 +8,7 @@ import support from '../../assets/support.png';
 
 export const Hero = () => {
   return (
-    <section className="mt-16" lazy="true">
+    <section >
       <div
         className="container mx-auto px-6 md:px-36 flex flex-col md:flex-row items-center justify-between bg-no-repeat"
         style={{

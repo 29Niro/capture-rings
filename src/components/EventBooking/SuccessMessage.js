@@ -1,13 +1,11 @@
-import React from 'react';
-import { CommentSection } from './CommentSection';
-
+import React from "react";
+import { ContactForm } from "./ContactForm";
 export const SuccessMessage = ({ formData }) => {
-
   return (
     <>
       <div className="text-center">
         {/* Add a image */}
-        <p className="text-lg text-gray-500 mb-4">Booking ID: </p>
+        <p className="text-lg text-gray-500 mb-4">Booking ID: {formData.id}</p>
         <h2 className="text-2xl font-bold mb-4">
           Your Appointment Booked successfully!
         </h2>
@@ -39,7 +37,7 @@ export const SuccessMessage = ({ formData }) => {
       </div>
 
       <div className="border w-full my-4"></div>
-      <CommentSection />
+      <ContactForm />
     </>
   );
 };

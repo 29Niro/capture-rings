@@ -34,7 +34,7 @@ export const Shop = () => {
   return (
     <div>
       <Header />
-      <section className="mt-20" lazy="true">
+      <section>
         <ProductListing products={products} />
       </section>
       <Footer />

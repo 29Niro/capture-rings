@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/firebase-config';
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Footer } from "../components/footer";
+import { Header } from "../components/header";
+import { db } from "../firebase/firebase-config";
 
 const categories = [
-  'Technology',
-  'Design',
-  'Culture',
-  'Business',
-  'Politics',
-  'Opinion',
-  'Science',
-  'Health',
+  "All",
+  "Technology",
+  "Design",
+  "Culture",
+  "Business",
+  "Politics",
+  "Opinion",
+  "Science",
+  "Health",
 ];
 
 export const Blog = () => {
@@ -20,18 +21,19 @@ export const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'blogs'));
+        const querySnapshot = await getDocs(collection(db, "blogs"));
         const blogs = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setBlogPosts(blogs);
       } catch (error) {
-        console.error('Error fetching blog posts:', error);
+        console.error("Error fetching blog posts:", error);
       } finally {
         setLoading(false);
       }
@@ -49,6 +51,11 @@ export const Blog = () => {
     setIsModalOpen(false);
     setSelectedBlog(null);
   };
+
+  const filteredBlogPosts =
+    selectedCategory === "All"
+      ? blogPosts
+      : blogPosts.filter((post) => post.category === selectedCategory);
 
   return (
     <section>
@@ -76,7 +83,7 @@ export const Blog = () => {
         {!loading && blogPosts.length > 0 && (
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 md:pr-6">
-              {blogPosts.map((post) => (
+              {filteredBlogPosts.map((post) => (
                 <div key={post.id} className="mb-8 flex flex-col md:flex-row">
                   <img
                     src={post.imageUrl}
@@ -90,7 +97,7 @@ export const Blog = () => {
                         {new Date(
                           post.createdAt.seconds * 1000
                         ).toLocaleDateString()}
-                      </span>{' '}
+                      </span>{" "}
                       | <span>{post.author}</span>
                     </div>
                     <p className="text-gray-700 mb-4">
@@ -121,12 +128,14 @@ export const Blog = () => {
                 <ul className="space-y-2">
                   {categories.map((category) => (
                     <li key={category}>
-                      <a
-                        href={`/category/${category}`}
-                        className="text-primaryBtn hover:underline"
+                      <button
+                        onClick={() => setSelectedCategory(category)}
+                        className={`text-primaryBtn hover:underline ${
+                          selectedCategory === category ? "font-bold" : ""
+                        }`}
                       >
                         {category}
-                      </a>
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -152,7 +161,7 @@ const BlogModal = ({ blog, onClose }) => {
         <div className="text-gray-500 mb-2">
           <span>
             {new Date(blog.createdAt.seconds * 1000).toLocaleDateString()}
-          </span>{' '}
+          </span>{" "}
           | <span>{blog.author}</span>
         </div>
         <img

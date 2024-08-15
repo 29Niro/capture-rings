@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { Header } from './header';
-import { Footer } from './footer';
-import { db } from '../firebase/firebase-config';
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { db } from "../firebase/firebase-config";
+import { Footer } from "./footer";
+import { Header } from "./header";
 
 export const EventGallery = () => {
   const { id } = useParams();
   const [images, setImages] = useState([]);
-  const [eventTitle, setEventTitle] = useState('');
+  const [eventTitle, setEventTitle] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEventData = async () => {
       try {
         // Fetch event title from Firestore
-        const eventDoc = await getDoc(doc(db, 'events', id));
-        console.log(eventDoc.data());
+        const eventDoc = await getDoc(doc(db, "events", id));
         if (eventDoc.exists()) {
           setEventTitle(eventDoc.data().eventName);
         }
@@ -31,7 +30,7 @@ export const EventGallery = () => {
 
         setImages(eventDoc.data().imageUrls);
       } catch (error) {
-        console.error('Error fetching event data:', error);
+        console.error("Error fetching event data:", error);
       } finally {
         setLoading(false);
       }
@@ -45,7 +44,7 @@ export const EventGallery = () => {
       <Header />
       <div className="container mx-auto px-6 md:px-36 py-12">
         <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 font-domine">
-          {eventTitle || 'Event Gallery'}
+          {eventTitle || "Event Gallery"}
         </h1>
 
         {/* Loading State */}

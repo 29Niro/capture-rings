@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -16,14 +17,14 @@ export const Footer = () => {
           <h4 className="font-semibold text-lg">Booking</h4>
           <ul className="mt-4">
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="/booking" className="hover:underline">
                 Book an Appointment
-              </a>
+              </Link>
             </li>
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="" className="hover:underline">
                 My Bookings
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -31,24 +32,24 @@ export const Footer = () => {
           <h4 className="font-semibold text-lg">Other Menu</h4>
           <ul className="mt-4">
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="/" className="hover:underline">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="/blog" className="hover:underline">
                 Blog
-              </a>
+              </Link>
             </li>
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="contact" className="hover:underline">
                 Contact
-              </a>
+              </Link>
             </li>
             <li className="mt-2">
-              <a href="#" className="hover:underline">
+              <Link to="about" className="hover:underline">
                 About Us
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

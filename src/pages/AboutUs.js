@@ -1,48 +1,46 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import About from '../assets/about.jpg';
-import srilanka from '../assets/srilanka.png';
-import customerService from '../assets/customer-service.png';
-import support from '../assets/support.png';
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
-import About2 from '../assets/about-2.jpg';
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import About2 from "../assets/about-2.jpg";
+import About from "../assets/about.jpg";
+import customerService from "../assets/customer-service.png";
+import srilanka from "../assets/srilanka.png";
+import support from "../assets/support.png";
+import { Footer } from "../components/footer";
+import { Header } from "../components/header";
+import { db } from "../firebase/firebase-config";
 
 const ourServices = [
   {
-    title: 'Photoshoots',
+    title: "Photoshoots",
     image: About,
     description:
-      'Capture Rings where your precious moments are immortalized through the lens of our skilled photographers.',
+      "Capture Rings where your precious moments are immortalized through the lens of our skilled photographers.",
   },
   {
-    title: 'Drone Shots',
+    title: "Drone Shots",
     image: About,
     description:
-      'Our skilled photographers make every occasion special with their artistic and creative photography skills.',
-  },
-];
-
-const ourTeams = [
-  {
-    title: 'Photographers',
-    image: About,
-  },
-  {
-    title: 'Videographers',
-    image: About,
-  },
-  {
-    title: 'Photographers',
-    image: About,
-  },
-  {
-    title: 'Videographers',
-    image: About,
+      "Our skilled photographers make every occasion special with their artistic and creative photography skills.",
   },
 ];
 
 export const AboutUs = () => {
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const querySnapshot = await getDocs(collection(db, "teams"));
+      const teamsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTeams(teamsData);
+    };
+
+    fetchTeams();
+  }, []);
+
   return (
     <>
       <Header />
@@ -57,12 +55,12 @@ export const AboutUs = () => {
               Our studio is dedicated to creating stunning, captivating, and
               timeless images and videos that tell your unique story.
             </p>
-            <button
-              href="#"
+            <Link
+              to="/gallery"
               className="bg-primaryBtn text-white px-6 py-3 rounded-3xl text-lg mr-4"
             >
               Gallery
-            </button>
+            </Link>
           </div>
           <div className="mt-8 py-6 md:mt-0 md:w-1/2 flex justify-center">
             <img
@@ -93,7 +91,7 @@ export const AboutUs = () => {
             <p>Personalized Approach </p>
             <p>
               We tailor our services to match your specific needs and
-              preferences.{' '}
+              preferences.{" "}
             </p>
           </div>
           <div className="flex flex-col items-center mb-6 md:mb-0">
@@ -168,18 +166,25 @@ export const AboutUs = () => {
           </div>
           <div className="mt-8 py-6 md:mt-0 flex justify-center">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
-              {ourTeams.map((team, index) => (
+              {teams.map((team) => (
                 <div
-                  key={index}
+                  key={team.id}
                   className="overflow-hidden bg-white rounded-lg shadow-lg"
                 >
                   <img
-                    src={team.image}
-                    alt={team.title}
+                    src={About} // You might want to add an image field to your teams in Firebase
+                    alt={team.name}
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2">{team.title}</h3>
+                    <h3 className="text-2xl font-bold mb-2">{team.name}</h3>
+                    <ul>
+                      {team.employees.map((employee, index) => (
+                        <li key={index} className="text-gray-600">
+                          {employee.name}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               ))}
@@ -193,7 +198,7 @@ export const AboutUs = () => {
           className="container mx-auto mt-36 px-6 md:px-36 flex flex-col md:flex-row items-center justify-between bg-no-repeat bg-cover bg-center"
           style={{
             backgroundImage: `url(${About2})`,
-            height: 'auto',
+            height: "auto",
           }}
         >
           <div className="container mx-auto my-40 flex flex-col md:flex-row items-center justify-between">
@@ -205,12 +210,12 @@ export const AboutUs = () => {
                 This is your chance to emphasize why the visitor should contact
                 you right now.
               </p>
-              <button
-                href="#"
+              <Link
+                to="/gallery"
                 className="bg-primaryBtn font-bold text-white px-12 py-3 rounded-3xl text-lg mr-4"
               >
                 Visit Gallery
-              </button>
+              </Link>
             </div>
           </div>
         </div>

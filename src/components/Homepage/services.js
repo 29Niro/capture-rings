@@ -1,27 +1,27 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import weddingShoot from '../../assets/wedding-shoot.png';
-import graduationShoot from '../../assets/graduation-shoot.png';
-import birthdayShoot from '../../assets/birthday-shoot.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import birthdayShoot from "../../assets/birthday-shoot.png";
+import graduationShoot from "../../assets/graduation-shoot.png";
+import weddingShoot from "../../assets/wedding-shoot.png";
 
 const services = [
   {
-    title: 'Wedding Shoots',
+    title: "Wedding Shoots",
     image: weddingShoot,
     description:
-      'Capture Rings where your precious moments are immortalized through the lens of our skilled photographers.',
+      "Capture Rings where your precious moments are immortalized through the lens of our skilled photographers.",
   },
   {
-    title: 'Graduation Shoots',
+    title: "Graduation Shoots",
     image: graduationShoot,
     description:
-      'With an unwavering commitment to excellence, we specialize in wedding photography that captures the essence of your love story.',
+      "With an unwavering commitment to excellence, we specialize in wedding photography that captures the essence of your love story.",
   },
   {
-    title: 'Birthday Shoots',
+    title: "Birthday Shoots",
     image: birthdayShoot,
     description:
-      'Our skilled photographers make every occasion special with their artistic and creative photography skills.',
+      "Our skilled photographers make every occasion special with their artistic and creative photography skills.",
   },
 ];
 
@@ -59,12 +59,12 @@ export const Services = () => {
             </div>
           ))}
         </div>
-        <button
-          href="#"
+        <Link
+          to="/booking"
           className="bg-primaryBtn text-white font-serif px-6 py-3 rounded-3xl text-lg"
         >
           Book Now
-        </button>
+        </Link>
       </div>
     </section>
   );

@@ -1,20 +1,20 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import heroImg from '../../assets/heroImg.png';
-import heroBg from '../../assets/heroBg.png';
-import srilanka from '../../assets/srilanka.png';
-import customerService from '../../assets/customer-service.png';
-import support from '../../assets/support.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import customerService from "../../assets/customer-service.png";
+import heroBg from "../../assets/heroBg.png";
+import heroImg from "../../assets/heroImg.png";
+import srilanka from "../../assets/srilanka.png";
+import support from "../../assets/support.png";
 
 export const Hero = () => {
   return (
-    <section >
+    <section>
       <div
         className="container mx-auto px-6 md:px-36 flex flex-col md:flex-row items-center justify-between bg-no-repeat"
         style={{
           backgroundImage: `url(${heroBg})`,
-          width: '100%',
-          height: 'auto',
+          width: "100%",
+          height: "auto",
         }}
       >
         <div className="text-center md:text-left md:w-1/2">
@@ -23,18 +23,18 @@ export const Hero = () => {
             Capture Your Moments With Us
           </h1>
           <div className="mt-6 flex justify-center md:justify-start">
-            <button
-              href="#"
+            <Link
+              to="/booking"
               className="bg-primaryBtn text-white font-serif px-6 py-3 rounded-3xl text-lg mr-4"
             >
               Book Now
-            </button>
-            <button
-              href="#"
+            </Link>
+            <Link
+              to="/gallery"
               className="bg-pink-600 text-white font-serif px-6 py-3 rounded-3xl text-lg"
             >
               Our Gallery
-            </button>
+            </Link>
           </div>
         </div>
         <div className="mt-8 py-6 md:mt-0 md:w-1/2 flex justify-center">

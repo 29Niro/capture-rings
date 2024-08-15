@@ -16,6 +16,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { db, storage } from "../../firebase/firebase-config";
 
+const categories = [
+  "Technology",
+  "Design",
+  "Culture",
+  "Business",
+  "Politics",
+  "Opinion",
+  "Science",
+  "Health",
+];
+
 export const BlogManagement = () => {
   const [blogs, setBlogs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +82,7 @@ export const BlogManagement = () => {
           <tr>
             <th className="border px-4 py-2">Title</th>
             <th className="border px-4 py-2">Author</th>
+            <th className="border px-4 py-2">Category</th>
             <th className="border px-4 py-2">Actions</th>
           </tr>
         </thead>
@@ -79,6 +91,7 @@ export const BlogManagement = () => {
             <tr key={blog.id}>
               <td className="border px-4 py-2">{blog.title}</td>
               <td className="border px-4 py-2">{blog.author}</td>
+              <td className="border px-4 py-2">{blog.category}</td>
               <td className="border px-4 py-2">
                 <button
                   className="bg-blue-500 text-white px-2 py-1 rounded-lg mr-2"
@@ -114,6 +127,7 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }) => {
   const [title, setTitle] = useState(blog?.title || "");
   const [author, setAuthor] = useState(blog?.author || "");
   const [excerpt, setExcerpt] = useState(blog?.excerpt || "");
+  const [category, setCategory] = useState(blog?.category || "");
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(blog?.imageUrl || "");
   const [uploading, setUploading] = useState(false);
@@ -145,6 +159,7 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }) => {
               title,
               author,
               excerpt,
+              category,
               imageUrl: downloadURL,
             };
 
@@ -158,7 +173,7 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }) => {
         }
       );
     } else {
-      const blogData = { title, author, excerpt, imageUrl };
+      const blogData = { title, author, excerpt, category, imageUrl };
       await onSave(blogData);
       onClose();
     }
@@ -209,6 +224,22 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }) => {
               className="border p-2 w-full"
               disabled={uploading}
             />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Category</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border p-2 w-full"
+              disabled={uploading}
+            >
+              <option value="">Select a category</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Image</label>

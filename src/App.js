@@ -8,6 +8,7 @@ import { EventGalleryManagement } from "./components/AdminDashboard/EventGallery
 import { Layout } from "./components/AdminDashboard/Layout";
 import { Packages } from "./components/AdminDashboard/Packages";
 import { ProductManagement } from "./components/AdminDashboard/ProductManagement";
+import { SubmissionsPage } from "./components/AdminDashboard/SubmissionsPage";
 import { Teams } from "./components/AdminDashboard/Teams";
 import { EventGallery } from "./components/EventGallery";
 import { CartPage } from "./components/Shop/CartPage";
@@ -73,6 +74,7 @@ function App() {
                 path="product-management"
                 element={<ProductManagement />}
               />
+              <Route path="submissions" element={<SubmissionsPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

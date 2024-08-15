@@ -2,6 +2,7 @@ import {
   faBlog,
   faBoxes,
   faCalendarAlt,
+  faEnvelope,
   faImages,
   faShoppingCart,
   faUsers,
@@ -28,6 +29,7 @@ const Sidebar = ({ className = "" }) => {
       icon: faShoppingCart,
       text: "Product Management",
     },
+    { path: "/admin/submissions", icon: faEnvelope, text: "Submissions" },
   ];
 
   return (

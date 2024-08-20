@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/capture-rings/static/css/main.37fd8303.css",
-    "main.js": "/capture-rings/static/js/main.90147687.js",
+    "main.js": "/capture-rings/static/js/main.5697c531.js",
     "static/media/about-2.jpg": "/capture-rings/static/media/about-2.181c5ca4a30de53fd496.jpg",
     "static/media/wedding-shoot.png": "/capture-rings/static/media/wedding-shoot.3ed2277ed13b0d335d69.png",
     "static/media/graduation-shoot.png": "/capture-rings/static/media/graduation-shoot.1b1f335eac55b670b44c.png",
@@ -27,10 +27,10 @@
     "static/media/slick.woff": "/capture-rings/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/capture-rings/index.html",
     "main.37fd8303.css.map": "/capture-rings/static/css/main.37fd8303.css.map",
-    "main.90147687.js.map": "/capture-rings/static/js/main.90147687.js.map"
+    "main.5697c531.js.map": "/capture-rings/static/js/main.5697c531.js.map"
   },
   "entrypoints": [
     "static/css/main.37fd8303.css",
-    "static/js/main.90147687.js"
+    "static/js/main.5697c531.js"
   ]
 }

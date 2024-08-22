@@ -7,6 +7,7 @@ import {
   getDocs,
   updateDoc,
 } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../../firebase/firebase-config';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
@@ -35,6 +36,9 @@ export const Packages = () => {
   const [teams, setTeams] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [imageFile, setImageFile] = useState(null); // State for storing the image file
+  const [imageUrl, setImageUrl] = useState(null); // Stores the uploaded image URL
+  const storage = getStorage(); // Initialize Firebase Storage
   const {
     register,
     handleSubmit,
@@ -63,6 +67,7 @@ export const Packages = () => {
   const openModal = (packageData = null) => {
     if (packageData) {
       setEditId(packageData.id);
+      setImageUrl(packageData.imageUrl); // Set the imageUrl when editing
       reset({
         title: packageData.title,
         description: packageData.description,
@@ -72,6 +77,7 @@ export const Packages = () => {
       });
     } else {
       reset();
+      setImageUrl(null);
     }
     setIsModalOpen(true);
   };
@@ -79,15 +85,43 @@ export const Packages = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditId(null);
+    setImageFile(null);
+    setImageUrl(null);
+  };
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+
+    // Optionally display a preview of the selected image
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   const onSubmit = async (data) => {
+    let uploadedImageUrl = imageUrl;
+
+    // If a new image file is selected, upload it to Firebase Storage
+    if (imageFile) {
+      const storageRef = ref(storage, `packages/${imageFile.name}`);
+      await uploadBytes(storageRef, imageFile);
+      uploadedImageUrl = await getDownloadURL(storageRef);
+    }
+
+    const packageData = {
+      ...data,
+      imageUrl: uploadedImageUrl, // Add the imageUrl to the data object
+    };
+
     if (editId) {
       const packageDoc = doc(db, 'packages', editId);
-      await updateDoc(packageDoc, data);
+      await updateDoc(packageDoc, packageData);
     } else {
-      await addDoc(collection(db, 'packages'), data);
+      await addDoc(collection(db, 'packages'), packageData);
     }
+
     const packageSnapshot = await getDocs(collection(db, 'packages'));
     setPackages(
       packageSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -123,6 +157,7 @@ export const Packages = () => {
             <th className="border px-4 py-2">Price</th>
             <th className="border px-4 py-2">Team</th>
             <th className="border px-4 py-2">Duration</th>
+            <th className="border px-4 py-2">Image</th> {/* New column */}
             <th className="border px-4 py-2">Actions</th>
           </tr>
         </thead>
@@ -134,6 +169,16 @@ export const Packages = () => {
               <td className="border px-4 py-2">{pkg.price}</td>
               <td className="border px-4 py-2">{pkg.team}</td>
               <td className="border px-4 py-2">{pkg.duration} hours</td>
+              <td className="border px-4 py-2">
+                {pkg.imageUrl && (
+                  <img
+                    src={pkg.imageUrl}
+                    alt={pkg.title}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                )}
+              </td>{' '}
+              {/* Display uploaded image */}
               <td className="border px-4 py-2">
                 <button
                   onClick={() => openModal(pkg)}
@@ -222,7 +267,7 @@ export const Packages = () => {
                 type="number"
                 {...register('duration')}
                 className="border p-2 w-full"
-                placeholder="Shoot Time Duration"
+                placeholder="Package Duration"
               />
               {errors.duration && (
                 <p className="text-red-500 text-sm">
@@ -230,10 +275,25 @@ export const Packages = () => {
                 </p>
               )}
             </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">Image</label>
+              <input
+                type="file"
+                onChange={handleImageChange}
+                className="border p-2 w-full"
+              />
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt="Selected Preview"
+                  className="mt-4 w-32 h-32 object-cover rounded-lg"
+                />
+              )}
+            </div>
             <div className="flex justify-end">
               <button
-                onClick={closeModal}
                 type="button"
+                onClick={closeModal}
                 className="bg-gray-300 text-black px-4 py-2 mr-2"
               >
                 Cancel
@@ -242,7 +302,7 @@ export const Packages = () => {
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2"
               >
-                {editId ? 'Update' : 'Add'}
+                {editId ? 'Update' : 'Save'}
               </button>
             </div>
           </form>

@@ -87,13 +87,24 @@ export const ServiceSelection = ({ formData, setFormData, nextStep }) => {
           {filteredPackages.map((pkg) => (
             <div
               key={pkg.id}
-              className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100"
+              className="p-6 border border-gray-300 rounded-lg flex items-start space-x-4 hover:bg-gray-100"
               onClick={() => handleSelectPackage(pkg)}
             >
-              <h3 className="text-lg font-semibold">{pkg.title}</h3>
-              <p>{pkg.description}</p>
-              <p>Duration: {pkg.duration}</p>
-              <p>Price: {pkg.price}</p>
+              <img
+                src={pkg.imageUrl}
+                alt={pkg.title}
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold">{pkg.title}</h3>
+                <p className="text-gray-700 text-justify">{pkg.description}</p>
+                <div className="flex justify-between items-center mt-4">
+                  <p className="text-gray-600">Duration: {pkg.duration} h</p>
+                  <p className="text-lg font-semibold text-primaryBtn bg-purple-100 p-2 rounded-lg">
+                    Price: {pkg.price} Rs
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>

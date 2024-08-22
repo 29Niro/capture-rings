@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 export const DateTimeSelection = ({
   formData,
@@ -11,7 +11,7 @@ export const DateTimeSelection = ({
   const [date, setDate] = useState(
     formData.date ? new Date(formData.date) : new Date()
   );
-  const [time, setTime] = useState(formData.time || "");
+  const [time, setTime] = useState(formData.time || '');
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -22,41 +22,42 @@ export const DateTimeSelection = ({
   };
 
   const handleNext = () => {
-    setFormData({ ...formData, date: date.toISOString().split("T")[0], time });
+    setFormData({ ...formData, date: date.toISOString().split('T')[0], time });
     nextStep();
   };
 
   const timeSlots = [
-    { id: 1, name: "Afternoon", value: "3:00 pm - 6:00 pm" },
-    { id: 2, name: "Evening", value: "6:00 pm - 9:00 pm" },
-    { id: 3, name: "Night", value: "9:00 pm - 12:00 am" },
+    { id: 1, name: 'Afternoon', value: '3:00 pm - 6:00 pm' },
+    { id: 2, name: 'Evening', value: '6:00 pm - 9:00 pm' },
+    { id: 3, name: 'Night', value: '9:00 pm - 12:00 am' },
   ];
 
   return (
     <div className="m-6">
-      <h2 className="text-2xl font-bold mb-4"> Date & Time</h2>
-      <div className="flex gap-10 items-start">
-        <div>
+      <h2 className="text-2xl font-bold mb-4">Date & Time</h2>
+      <div className="flex flex-col md:flex-row gap-10 items-start justify-center">
+        <div className="md:w-1/2 w-full">
           <label className="block mb-2">Date</label>
           <div className="mb-4">
             <Calendar
               value={date}
               onChange={handleDateChange}
               className="w-full p-2 border border-gray-300 rounded-lg"
+              tileClassName="text-lg" // Increase tile size
             />
           </div>
         </div>
-        <div className="mb-4">
+        <div className="md:w-1/2 w-full">
           <label className="block mb-2">Time Slot</label>
           <div className="grid grid-cols-1 gap-4">
             {timeSlots.map((slot) => (
               <div key={slot.id}>
                 <label className="flex items-center">{slot.name}</label>
                 <button
-                  className={`p-2 border rounded-lg ${
+                  className={`p-4 border rounded-lg text-lg w-full ${
                     time === slot.value
-                      ? "bg-purple-500 text-white"
-                      : "bg-white text-black"
+                      ? 'bg-primaryBtn text-white'
+                      : 'bg-white text-black'
                   }`}
                   onClick={() => handleTimeChange(slot.value)}
                 >

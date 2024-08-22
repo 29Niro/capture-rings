@@ -49,7 +49,7 @@ export const EventBooking = () => {
           {steps.slice(0, -1).map((step, index) => (
             <div
               key={index}
-              className={`text-center py-2 px-4 mx-2 rounded-lg cursor-pointer flex-shrink-0 ${
+              className={`text-center py-2 px-4 mx-2 rounded-lg flex-shrink-0 ${
                 currentStep === index
                   ? 'bg-primaryBtn text-white'
                   : 'bg-gray-200 text-gray-500'

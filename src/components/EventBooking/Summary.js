@@ -27,7 +27,7 @@ export const Summary = ({ formData, setFormData, nextStep, prevStep }) => {
       const templateParams = {
         to_name: `${formData.fname} ${formData.lname}`,
         to_email: formData.email,
-        to_shop: 'niroorin2@gmail.com',
+        to_shop: 'capturerings653@gmail.com',
         from_name: 'Capture Rings Studio', // or any name you prefer
         service: formData.title,
         date: formData.date,
@@ -38,10 +38,10 @@ export const Summary = ({ formData, setFormData, nextStep, prevStep }) => {
 
       // Send email to the user
       await emailjs.send(
-        'service_vk35obn',
-        'template_3ccaq4p',
+        'service_ofg7xdi',
+        'template_0bofilv',
         templateParams,
-        'heknMVjMXv40gqWVt'
+        '6bpGDIQwa7yR3Jokb'
       );
 
       //add another template for the shop owner

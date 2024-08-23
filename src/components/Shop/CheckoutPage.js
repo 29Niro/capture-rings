@@ -67,7 +67,7 @@ export const CheckoutPage = () => {
       const templateParams = {
         to_name: data.fullName,
         to_email: data.email,
-        to_shop: 'niroorin2@gmail.com', // Shop owner's email
+        to_shop: 'capturerings653@gmail.com', // Shop owner's email
         from_name: 'Capture Shop',
         order_id: orderId,
         order_details: cart
@@ -79,10 +79,10 @@ export const CheckoutPage = () => {
 
       // Send email to the customer
       await emailjs.send(
-        'service_vk35obn', // Replace with your EmailJS service ID
-        'template_xvpq1f5', // Replace with your EmailJS template ID for customer emails
+        'service_ofg7xdi', // Replace with your EmailJS service ID
+        'template_xnlq0us', // Replace with your EmailJS template ID for customer emails
         templateParams,
-        'heknMVjMXv40gqWVt' // Replace with your EmailJS user ID
+        '6bpGDIQwa7yR3Jokb' // Replace with your EmailJS user ID
       );
 
       // Clear the cart after successful order

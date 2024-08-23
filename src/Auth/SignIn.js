@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { signIn } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
       await signIn(email, password);
-      navigate("/admin");
+      navigate('/admin');
     } catch (err) {
-      setError("Failed to sign in");
+      setError('Failed to sign in');
       console.error(err);
     }
   };
@@ -76,15 +76,6 @@ const SignIn = () => {
             </button>
           </div>
         </form>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Don't have an account?
-          <Link
-            to="/signup"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Sign up
-          </Link>
-        </p>
       </div>
     </div>
   );

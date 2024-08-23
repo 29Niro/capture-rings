@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignIn from "./Auth/SignIn";
-import SignUp from "./Auth/SignUp";
 import { BlogManagement } from "./components/AdminDashboard/BlogManagement";
 import { Bookings } from "./components/AdminDashboard/Bookings";
 import { EventGalleryManagement } from "./components/AdminDashboard/EventGalleryManagement";
@@ -50,7 +49,6 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
 
             {/* Protected Admin Dashboard Routes */}
             <Route

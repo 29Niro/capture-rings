@@ -310,7 +310,7 @@ export const CheckoutPage = () => {
         {showSnackbar && (
           <div className="fixed top-4 right-4 z-50 flex items-center bg-green-500 text-white px-4 py-2 rounded shadow-md">
             <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
-            Product added to cart!
+            Ordered Successfully!
           </div>
         )}
       </div>

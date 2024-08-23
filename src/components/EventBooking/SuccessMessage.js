@@ -1,5 +1,4 @@
 import React from "react";
-import { ContactForm } from "./ContactForm";
 export const SuccessMessage = ({ formData }) => {
   return (
     <>
@@ -37,7 +36,7 @@ export const SuccessMessage = ({ formData }) => {
       </div>
 
       <div className="border w-full my-4"></div>
-      <ContactForm />
+      
     </>
   );
 };

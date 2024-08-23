@@ -6,6 +6,7 @@ import { Summary } from '../components/EventBooking/Summary';
 import { SuccessMessage } from '../components/EventBooking/SuccessMessage';
 import { Header } from '../components/header';
 import { Footer } from '../components/footer';
+import { ContactForm } from '../components/EventBooking/ContactForm';
 
 export const EventBooking = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -70,6 +71,7 @@ export const EventBooking = () => {
           />
         </div>
       </div>
+      <ContactForm />
       <Footer />
     </section>
   );

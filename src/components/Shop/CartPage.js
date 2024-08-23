@@ -27,7 +27,7 @@ export const CartPage = () => {
             {cart.map((item) => (
               <div key={item.id} className="flex items-center border-b py-4">
                 <img
-                  src={item.imageUrl}
+                  src={item.imageUrls[0]}
                   alt={item.name}
                   className="w-16 h-16 object-cover mr-4"
                 />

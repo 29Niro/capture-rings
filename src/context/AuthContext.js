@@ -3,10 +3,10 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth, db } from "../firebase/firebase-config";
+} from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { auth, db } from '../firebase/firebase-config';
 
 const AuthContext = createContext();
 
@@ -19,36 +19,49 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   async function signUp(email, password) {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    // You can add additional user data to Firestore here if needed
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: userCredential.user.email,
-      // Add any other initial user data
-    });
-    return userCredential.user;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        email: userCredential.user.email,
+      });
+      return userCredential.user;
+    } catch (error) {
+      console.error('Error signing up:', error.message);
+      throw error; // Optional: rethrow to handle elsewhere
+    }
   }
 
   function signIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      console.error('Error signing in:', error.message);
+      throw error; // Optional: rethrow to handle elsewhere
+    });
   }
 
   function signOutUser() {
-    return signOut(auth);
+    return signOut(auth).catch((error) => {
+      console.error('Error signing out:', error.message);
+      throw error; // Optional: rethrow to handle elsewhere
+    });
   }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUser({ ...user, ...docSnap.data() });
-        } else {
-          setUser(user);
+        const docRef = doc(db, 'users', user.uid);
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setUser({ ...user, ...docSnap.data() });
+          } else {
+            setUser(user);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error.message);
         }
       } else {
         setUser(null);
